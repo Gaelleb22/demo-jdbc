@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import fr.diginamic.jdbc.dao.FournisseurDoaJdbc;
+import fr.diginamic.jdbc.entites.Fournisseur;
+
 /**Tester suppression de données sur la DB compta
  * @author formation
  *
@@ -20,21 +23,17 @@ public class TestDelete {
 		String user = fichierConf.getString("database.user");
 		String password = fichierConf.getString("database.password");
 		Connection connection = DriverManager.getConnection(url, user, password);
-
-		java.sql.Statement statement = connection.createStatement();
-		statement.executeUpdate("DELETE FROM fournisseur WHERE NOM LIKE '%Peinture%'");
-		statement.close();
 		
-		java.sql.Statement statement2 = connection.createStatement();
-		ResultSet curseur = statement2.executeQuery("SELECT * FROM fournisseur");
-		while(curseur.next()) {
-			System.out.println(curseur.getInt("ID")+" "+curseur.getString("NOM"));
+		Fournisseur fournisseur = new Fournisseur("L''Espace Récréation");
+		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
+		boolean update = dao.delete(fournisseur);
+		
+		if(update == true) {
+			System.out.println("suppression réussit");
 		}
-
-		curseur.close();
-		statement2.close();
-
-		connection.close();
+		else if(update == false) {
+			System.out.println("erreur");
+		}
 	}
 
 }

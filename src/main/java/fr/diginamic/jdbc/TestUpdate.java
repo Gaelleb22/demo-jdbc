@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import fr.diginamic.jdbc.dao.FournisseurDoaJdbc;
+import fr.diginamic.jdbc.entites.Fournisseur;
+
 /**Tester les modifications sur la BD compta
  * @author formation
  *
@@ -23,20 +26,15 @@ public class TestUpdate {
 		String password = fichierConf.getString("database.password");
 		Connection connection = DriverManager.getConnection(url, user, password);
 
-		java.sql.Statement statement = connection.createStatement();
-		statement.executeUpdate("UPDATE fournisseur SET NOM = 'La Maison des Peintures' WHERE NOM LIKE '%Peinture'");
-		statement.close();
+		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
+		int update = dao.update("L''Espace Création", "L''Espace Récréation");
 		
-		java.sql.Statement statement2 = connection.createStatement();
-		ResultSet curseur = statement2.executeQuery("SELECT * FROM fournisseur");
-		while(curseur.next()) {
-			System.out.println(curseur.getInt("ID")+" "+curseur.getString("NOM"));
+		if(update == 1) {
+			System.out.println("changement de nom réussit");
 		}
-
-		curseur.close();
-		statement2.close();
-
-		connection.close();
+		else if(update == 0) {
+			System.out.println("erreur");
+		}
 
 	}
 

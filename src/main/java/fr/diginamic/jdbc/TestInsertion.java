@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import fr.diginamic.jdbc.dao.FournisseurDoaJdbc;
+import fr.diginamic.jdbc.entites.Fournisseur;
+
 
 /**Tester les insertions sur la BD compta
  * @author formation
@@ -24,19 +27,9 @@ public class TestInsertion {
 		String password = fichierConf.getString("database.password");
 		Connection connection = DriverManager.getConnection(url, user, password);
 		
-		java.sql.Statement statement = connection.createStatement();
-		statement.executeUpdate("INSERT INTO fournisseur(NOM) values ('La Maison de la Peinture')");
-		statement.close();
-		
-		java.sql.Statement statement2 = connection.createStatement();
-		ResultSet curseur = statement2.executeQuery("SELECT * FROM fournisseur");
-		while(curseur.next()) {
-			System.out.println(curseur.getInt("ID")+" "+curseur.getString("NOM"));
-		}
-
-		curseur.close();
-		statement2.close();
-		connection.close();
+		Fournisseur nouveauFournisseur = new Fournisseur("L''Espace Création");
+		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
+		dao.insert(nouveauFournisseur);
 
 	}
 

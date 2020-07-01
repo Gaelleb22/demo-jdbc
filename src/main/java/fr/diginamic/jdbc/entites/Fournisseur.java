@@ -15,12 +15,14 @@ public class Fournisseur {
 	 * @param id
 	 * @param nom
 	 */
-	public Fournisseur(int id, String nom) {
-		this.id = id;
+	public Fournisseur(String nom) {
 		this.nom = nom;
 	}
 	
-	
+	public Fournisseur(int id, String nom) {
+		this(nom);
+		this.id = id;
+	}
 	
 	@Override
 	public String toString() {

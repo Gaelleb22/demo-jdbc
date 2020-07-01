@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import fr.diginamic.jdbc.dao.FournisseurDoaJdbc;
 import fr.diginamic.jdbc.entites.Fournisseur;
 
 /**Tester les selections sur la BD compta
@@ -26,26 +27,14 @@ public class TestSelect {
 		String password = fichierConf.getString("database.password");
 		Connection connection = DriverManager.getConnection(url, user, password);
 		
-		java.sql.Statement statement = connection.createStatement();
-		ResultSet curseur = statement.executeQuery("SELECT * FROM fournisseur");
-		
 		List<Fournisseur> fournisseurs = new ArrayList();
-		
-		while(curseur.next()) {
-			int id = curseur.getInt("ID");
-			String nom = curseur.getString("NOM");
-			Fournisseur fournisseur = new Fournisseur(id, nom);
-			fournisseurs.add(fournisseur);
-		}
+		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
+		fournisseurs = dao.extraire();
 		
 		for (Fournisseur fournisseur : fournisseurs) {
 			System.out.println(fournisseur.toString());
 		}
 
-		curseur.close();
-		statement.close();
-
-		connection.close();
 
 	}
 
