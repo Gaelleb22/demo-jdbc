@@ -1,17 +1,17 @@
-package fr.dev;
+package fr.diginamic.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import org.mariadb.jdbc.Driver;
 
-/**tester la connection à la BD compta
+/**Tester les insertions sur la BD compta
  * @author formation
  *
  */
-public class TestConnectionJdbc {
+public class TestInsertion {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
@@ -23,11 +23,20 @@ public class TestConnectionJdbc {
 		String user = fichierConf.getString("database.user");
 		String password = fichierConf.getString("database.password");
 		Connection connection = DriverManager.getConnection(url, user, password);
-
-		System.out.println(connection.toString());
-
-		connection.close();
 		
+		java.sql.Statement statement = connection.createStatement();
+		statement.executeUpdate("INSERT INTO fournisseur(NOM) values ('La Maison de la Peinture')");
+		statement.close();
+		
+		java.sql.Statement statement2 = connection.createStatement();
+		ResultSet curseur = statement2.executeQuery("SELECT * FROM fournisseur");
+		while(curseur.next()) {
+			System.out.println(curseur.getInt("ID")+" "+curseur.getString("NOM"));
+		}
+
+		curseur.close();
+		statement2.close();
+		connection.close();
 
 	}
 
