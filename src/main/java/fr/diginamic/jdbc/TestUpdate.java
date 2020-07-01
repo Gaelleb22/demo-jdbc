@@ -15,18 +15,10 @@ import fr.diginamic.jdbc.entites.Fournisseur;
  */
 public class TestUpdate {
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) {
 		
-		ResourceBundle fichierConf = ResourceBundle.getBundle("database");
-
-		String driverName = fichierConf.getString("database.driver");
-		Class.forName(driverName);
-		String url = fichierConf.getString("database.url");
-		String user = fichierConf.getString("database.user");
-		String password = fichierConf.getString("database.password");
-		Connection connection = DriverManager.getConnection(url, user, password);
-
-		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
+		
+		FournisseurDoaJdbc dao = new FournisseurDoaJdbc();
 		int update = dao.update("L''Espace Création", "L''Espace Récréation");
 		
 		if(update == 1) {

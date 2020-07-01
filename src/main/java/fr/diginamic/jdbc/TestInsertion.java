@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import fr.diginamic.jdbc.dao.FournisseurDoaJdbc;
 import fr.diginamic.jdbc.entites.Fournisseur;
+import fr.diginamic.jdbc.exceptions.DaoException;
 
 
 /**Tester les insertions sur la BD compta
@@ -16,21 +17,17 @@ import fr.diginamic.jdbc.entites.Fournisseur;
  */
 public class TestInsertion {
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) {
 		
-		ResourceBundle fichierConf = ResourceBundle.getBundle("database");
+		try {
+			Fournisseur nouveauFournisseur = new Fournisseur("L''Espace Création");
+			FournisseurDoaJdbc dao = new FournisseurDoaJdbc();
+			dao.insert(nouveauFournisseur);
 
-		String driverName = fichierConf.getString("database.driver");
-		Class.forName(driverName);
-		String url = fichierConf.getString("database.url");
-		String user = fichierConf.getString("database.user");
-		String password = fichierConf.getString("database.password");
-		Connection connection = DriverManager.getConnection(url, user, password);
+		} catch (DaoException e) {
+			System.out.println(e.getMessage());
+		}
 		
-		Fournisseur nouveauFournisseur = new Fournisseur("L''Espace Création");
-		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
-		dao.insert(nouveauFournisseur);
-
 	}
 
 }

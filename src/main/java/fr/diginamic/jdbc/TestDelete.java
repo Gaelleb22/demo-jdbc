@@ -14,18 +14,11 @@ import fr.diginamic.jdbc.entites.Fournisseur;
  */
 public class TestDelete {
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		ResourceBundle fichierConf = ResourceBundle.getBundle("database");
-
-		String driverName = fichierConf.getString("database.driver");
-		Class.forName(driverName);
-		String url = fichierConf.getString("database.url");
-		String user = fichierConf.getString("database.user");
-		String password = fichierConf.getString("database.password");
-		Connection connection = DriverManager.getConnection(url, user, password);
+	public static void main(String[] args) {
+		
 		
 		Fournisseur fournisseur = new Fournisseur("L''Espace Récréation");
-		FournisseurDoaJdbc dao = new FournisseurDoaJdbc(connection);
+		FournisseurDoaJdbc dao = new FournisseurDoaJdbc();
 		boolean update = dao.delete(fournisseur);
 		
 		if(update == true) {
