@@ -17,16 +17,27 @@ public class TestConnectionJdbc {
 		
 		ResourceBundle fichierConf = ResourceBundle.getBundle("database");
 
-		String driverName = fichierConf.getString("database.driver");
-		Class.forName(driverName);
-		String url = fichierConf.getString("database.url");
-		String user = fichierConf.getString("database.user");
-		String password = fichierConf.getString("database.password");
-		Connection connection = DriverManager.getConnection(url, user, password);
+//		String driverName = fichierConf.getString("database.driver");
+//		Class.forName(driverName);
+//		String url = fichierConf.getString("database.url");
+//		String user = fichierConf.getString("database.user");
+//		String password = fichierConf.getString("database.password");
+//		Connection connection = DriverManager.getConnection(url, user, password);
 
-		System.out.println(connection.toString());
+//		System.out.println(connection.toString());
 
-		connection.close();
+//		connection.close();
+		
+		String driverName2 = fichierConf.getString("db.clevercloud.driver");
+		Class.forName(driverName2);
+		String url2 = fichierConf.getString("db.clevercloud.url");
+		String user2 = fichierConf.getString("db.clevercloud.user");
+		String password2 = fichierConf.getString("db.clevercloud.password");
+		Connection connection2 = DriverManager.getConnection(url2, user2, password2);
+
+		System.out.println(connection2.toString());
+
+		connection2.close();
 
 	}
 
